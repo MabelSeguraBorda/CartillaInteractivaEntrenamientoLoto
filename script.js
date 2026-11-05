@@ -292,9 +292,25 @@ $("#btnRegister").addEventListener("click", () => {
   const falta = [name.length < 5 && "nombre completo", !emp && "número de empleado", !area && "área", !cargo && "cargo"].filter(Boolean);
   if (falta.length) { fb.className = "fb show bad"; fb.textContent = "Completa: " + falta.join(", ") + "."; sfx.bad(); return; }
   Object.assign(state, { name, empId: emp, area, cargo, machine: $("#inMachine").value.trim() }); save(); updateHud();
-  fb.className = "fb show ok"; fb.textContent = `¡Listo, ${name.split(" ")[0]}! Tu registro quedó guardado. Ya puedes empezar.`;
+  fb.className = "fb show ok"; fb.textContent = `¡Listo, ${name.split(" ")[0]}! Tu registro quedó guardado. Enviándolo al Sheet…`;
   sfx.ok(); award("reg", 20, "Registro completo"); unlockMedal("reg");
+  // El registro llega al Sheet de una vez; al terminar la evaluación se completa esa misma fila
+  if (!state.regPend || !state.regFolio) { state.regFolio = nuevoFolio(); state.regPend = true; save(); }
+  const now = new Date(), ua = navigator.userAgent;
+  const reg = {
+    "Folio": state.regFolio, "Fecha": now.toLocaleDateString("es-CO"), "Hora": now.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }),
+    "Nombre completo": name, "N° de empleado": emp, "Área": area, "Cargo": cargo, "Máquina / línea": state.machine || "",
+    "Resultado": "SIN EVALUAR",
+    "Dispositivo": /Mobi|Android|iPhone/i.test(ua) ? "Celular" : "Computador",
+    "Cartilla": "Cartilla LOTO · Mabel Segura Borda, Auxiliar de EHS"
+  };
+  sendToSheet(reg, (t, m) => {
+    const ok = /^✅/.test(t), mal = /^⚠️/.test(t);
+    fb.className = "fb show " + (mal ? "bad" : ok ? "ok" : "info");
+    fb.textContent = ok ? `¡Listo, ${name.split(" ")[0]}! Tu registro llegó al Sheet. Ya puedes empezar.` : `${t} ${m}`;
+  });
 });
+function nuevoFolio() { return "LOTO-" + Date.now().toString(36).toUpperCase(); }
 
 /* ---------------------------------------------------------------------
    7. ENERGÍAS: TARJETAS QUE GIRAN
@@ -790,7 +806,8 @@ function finishQuiz() {
     <div class="btn-row" style="justify-content:center"><button class="btn btn--ghost" type="button" id="qStart">↺ Intentar de nuevo</button></div></div>`;
   requestAnimationFrame(() => setTimeout(() => { $("#scoreArc").style.strokeDashoffset = C * (1 - pct / 100); }, 60));
   award("quiz", passed ? 100 : 20, "Autoevaluación terminada");
-  const folio = "LOTO-" + Date.now().toString(36).toUpperCase();
+  const folio = state.regPend && state.regFolio ? state.regFolio : nuevoFolio();
+  state.regPend = false; save();
   if (passed) {
     sfx.win(); confetti(90);
     state.cert = { name: state.name || "Trabajador sin registrar", empId: state.empId || "", area: state.area || "", cargo: state.cargo || "", machine: state.machine || "", pct, folio, date: new Date().toLocaleDateString("es-CO", { day: "2-digit", month: "long", year: "numeric" }) };
@@ -847,8 +864,8 @@ function finishQuiz() {
 /* ---------------------------------------------------------------------
    16. GOOGLE SHEETS
    --------------------------------------------------------------------- */
-function setSync(t, m) { $("#sync").classList.add("show"); $("#syncT").textContent = t; $("#syncM").textContent = m; }
-async function sendToSheet(p) {
+function setSyncBox(t, m) { $("#sync").classList.add("show"); $("#syncT").textContent = t; $("#syncM").textContent = m; }
+async function sendToSheet(p, setSync = setSyncBox) {
   if (typeof google !== "undefined" && google.script && google.script.run) {
     setSync("⏳ Guardando en Google Sheets…", "Conectando con Apps Script…");
     google.script.run.withSuccessHandler((r) => setSync("✅ Registro guardado en Google Sheets", `Folio ${p["Folio"] || p.folio}${r && (r.fila || r.row) ? " · fila " + (r.fila || r.row) : ""}.`))
@@ -863,7 +880,7 @@ async function sendToSheet(p) {
     let d = null; try { d = await r.json(); } catch (_) {}
     if (d && d.ok === false) { setSync("⚠️ El Sheet respondió con un error", `${d.error || "Error desconocido"} · Copia este mensaje y revisa el Apps Script.`); return; }
     if (!d) { setSync("⚠️ Enviado, pero el Sheet no confirmó", "Revisa que el Web App esté publicado con acceso “Cualquier persona” (Anyone) y como nueva versión."); return; }
-    if (d.repetido) { setSync("✅ Ya estaba guardado en Google Sheets", `Folio ${p["Folio"] || p.folio} · fila ${d.fila}. No se creó una fila repetida.`); return; }
+    if (d.actualizado) { setSync("✅ Registro guardado en Google Sheets", `Folio ${p["Folio"] || p.folio} · se actualizó la fila ${d.fila}.`); return; }
     setSync("✅ Registro guardado en Google Sheets", `Folio ${p["Folio"] || p.folio}${d.fila || d.row ? " guardado en la fila " + (d.fila || d.row) : ""}.`);
   } catch (err) {
     // No se reenvía: si el envío llegó pero Google no dejó leer la respuesta, reenviar crearía una fila repetida.
