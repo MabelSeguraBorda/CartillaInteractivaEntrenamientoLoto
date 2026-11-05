@@ -714,41 +714,91 @@ function fitCert() {
 function showCert() {
   if (!state.cert) return;
   fillCert(state.cert); $("#cert").classList.add("show");
-  requestAnimationFrame(fitCert);
+  requestAnimationFrame(() => { fitCert(); if ($("#cert").offsetParent && typeof prepCertPdf === "function") setTimeout(() => prepCertPdf().catch(() => {}), 600); });
 }
 window.addEventListener("resize", fitCert);
 function loadScript(src) {
   return new Promise((ok, bad) => { if ([...document.scripts].some((s) => s.src === src)) return ok(); const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
 }
-async function downloadCertPdf() {
-  const btn = $("#btnCertPdf"), txt = btn.textContent;
-  btn.textContent = "⏳ Generando PDF…"; btn.classList.add("cert__busy");
+/* El PDF se arma por adelantado cuando el certificado aparece en pantalla.
+   Así, al tocar "Descargar", el archivo ya está listo: Safari del iPhone solo
+   deja descargar o compartir en el mismo instante del toque. */
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+let certPdf = null; // { key, promise, res }
+const certKey = () => JSON.stringify(state.cert || {});
+async function buildCertPdf() {
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+  fillCert(state.cert);
   const box = document.createElement("div");
   try {
-    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
-    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
     // copia sin escalar, fuera de la pantalla, para que el PDF salga igual en celular y computador
     box.style.cssText = `position:fixed;left:-20000px;top:0;width:${CERT_W}px;height:${CERT_H}px;`;
     const clone = $("#certDoc").cloneNode(true); clone.removeAttribute("id"); clone.classList.add("is-capture"); clone.style.transform = "none";
     box.appendChild(clone); document.body.appendChild(box);
     await Promise.all([...clone.querySelectorAll("img")].map((im) => im.complete ? 0 : new Promise((r) => { im.onload = im.onerror = r; })));
+    const opts = { scale: 2, backgroundColor: "#ffffff", logging: false, scrollX: 0, scrollY: 0, windowWidth: CERT_W, windowHeight: CERT_H };
     let canvas;
-    try { canvas = await html2canvas(clone, { scale: 2, backgroundColor: "#ffffff", useCORS: true, logging: false, scrollX: 0, scrollY: 0, windowWidth: CERT_W, windowHeight: CERT_H }); canvas.toDataURL("image/jpeg"); }
-    catch (e) { clone.querySelectorAll("img").forEach((im) => (im.style.visibility = "hidden")); canvas = await html2canvas(clone, { scale: 2, backgroundColor: "#ffffff", logging: false, scrollX: 0, scrollY: 0, windowWidth: CERT_W, windowHeight: CERT_H }); }
+    try { canvas = await html2canvas(clone, Object.assign({ useCORS: true }, opts)); canvas.toDataURL("image/jpeg"); }
+    catch (e) { clone.querySelectorAll("img").forEach((im) => (im.style.visibility = "hidden")); canvas = await html2canvas(clone, opts); }
     const pdf = new window.jspdf.jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-    pdf.addImage(canvas.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, 297, 210);
-    pdf.setProperties({ title: "Certificado LOTO · " + (state.cert ? state.cert.name : ""), author: "Cartilla LOTO · Mabel Segura Borda, Auxiliar de EHS" });
-    const nombre = (state.cert ? state.cert.name : "trabajador").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "");
-    pdf.save(`Certificado_LOTO_${nombre || "trabajador"}.pdf`);
-    toast("Certificado descargado", "🎓"); sfx.ok();
+    pdf.addImage(canvas.toDataURL("image/jpeg", 0.92), "JPEG", 0, 0, 297, 210);
+    pdf.setProperties({ title: "Certificado LOTO · " + state.cert.name, author: "Cartilla LOTO · Mabel Segura Borda, Auxiliar de EHS" });
+    const nombre = state.cert.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "");
+    return { blob: pdf.output("blob"), name: `Certificado_LOTO_${nombre || "trabajador"}.pdf` };
+  } finally { box.remove(); }
+}
+function prepCertPdf() {
+  if (!state.cert) return Promise.reject(new Error("sin certificado"));
+  const k = certKey();
+  if (certPdf && certPdf.key === k) return certPdf.promise;
+  const item = { key: k };
+  item.promise = buildCertPdf().then((r) => (item.res = r));
+  item.promise.catch(() => { if (certPdf === item) certPdf = null; });
+  certPdf = item;
+  return item.promise;
+}
+function entregarPdf(r, win) {
+  if (IS_IOS) {
+    const file = new File([r.blob], r.name, { type: "application/pdf" });
+    // Opción 1: menú Compartir del iPhone (Guardar en Archivos, WhatsApp, correo…)
+    if (!win && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: "Certificado LOTO" }).catch(() => {});
+      return;
+    }
+    // Opción 2: abrir el PDF en una pestaña; desde ahí se guarda con el botón Compartir
+    const url = URL.createObjectURL(r.blob);
+    if (win) win.location.href = url; else if (!window.open(url, "_blank")) location.href = url;
+    toast("Toca Compartir ⬆️ y luego “Guardar en Archivos”", "📄");
+    return;
+  }
+  const url = URL.createObjectURL(r.blob), a = document.createElement("a");
+  a.href = url; a.download = r.name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  toast("Certificado descargado", "🎓"); sfx.ok();
+}
+$("#btnCertPdf").addEventListener("click", async () => {
+  if (!state.cert) return;
+  const listo = certPdf && certPdf.key === certKey() && certPdf.res;
+  if (listo) { entregarPdf(listo, null); return; }
+  // Aún no está listo: en iPhone se abre la pestaña ya (en el toque) y se llena cuando termine
+  const win = IS_IOS ? window.open("", "_blank") : null;
+  if (win) { try { win.document.write('<p style="font:18px -apple-system,sans-serif;padding:32px;color:#0000a0">⏳ Generando tu certificado…</p>'); } catch (_) {} }
+  const btn = $("#btnCertPdf"), txt = btn.textContent;
+  btn.textContent = "⏳ Generando PDF…"; btn.classList.add("cert__busy");
+  try {
+    const r = await prepCertPdf();
+    entregarPdf(r, win);
   } catch (e) {
+    if (win) win.close();
     toast("No se pudo crear el PDF: usa Imprimir → Guardar como PDF", "⚠️");
     fitCert(); printOnly("print-cert");
-  } finally {
-    box.remove(); btn.textContent = txt; btn.classList.remove("cert__busy");
-  }
+  } finally { btn.textContent = txt; btn.classList.remove("cert__busy"); }
+});
+// Preparar el PDF en cuanto el certificado se ve en pantalla
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver((ents) => { if (ents.some((e) => e.isIntersecting) && state.cert) prepCertPdf().catch(() => {}); }, { rootMargin: "200px" }).observe($("#cert"));
 }
-$("#btnCertPdf").addEventListener("click", downloadCertPdf);
 
 /* ---------------------------------------------------------------------
    15. AUTOEVALUACIÓN (una pregunta a la vez)
