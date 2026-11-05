@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cartilla LOTO · Bloqueo y Etiquetado</title>
+  <meta name="description" content="Cartilla digital de capacitación en bloqueo y etiquetado (LOTO) para operarios de maquinaria. Creada por Mabel Segura Borda, Auxiliar de EHS.">
+  <meta name="author" content="Mabel Segura Borda · Auxiliar de EHS">
+  <meta name="theme-color" content="#0000a0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gradRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0000a0"/><stop offset="1" stop-color="#00a1ff"/></linearGradient>
+  </defs>
+</svg>
+
+<div class="hazard" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar__in">
+    <div class="brand">
+      <div class="brand__logo brand__logo--corp" aria-hidden="true" style="background:#fff; border-radius:50%; padding:2px; box-shadow:0 2px 8px rgba(0,0,0,.15); border:1px solid var(--line); overflow:hidden">
+        <img src="img/logo-mars-hse.png" alt="HSE Mars Snacking" style="width:100%; height:100%; object-fit:contain; border-radius:50%">
+      </div>
+      <div style="min-width:0">
+        <div class="brand__t">Cartilla LOTO</div>
+        <div class="brand__s">HSE Mars Snacking · Mabel Segura Borda</div>
+      </div>
+    </div>
+    <div class="hud">
+      <span class="hud__chip hud__name"><span id="hudAvatar">👷</span><b id="hudName">Sin registrar</b></span>
+      <span class="hud__chip hud__xp" id="hudXpChip">⭐ <b id="hudXP">0</b> XP</span>
+      <span class="ring hud__ring" title="Avance de la capacitación">
+        <svg viewBox="0 0 38 38"><circle class="bgc" cx="19" cy="19" r="16"/><circle class="fgc" id="hudRing" cx="19" cy="19" r="16" stroke-dasharray="100.5" stroke-dashoffset="100.5"/></svg>
+        <span id="hudPct">0%</span>
+      </span>
+      <button class="hud__chip hud__btn" id="btnSound" type="button" title="Sonido" aria-label="Activar o silenciar sonido">🔊</button>
+      <button class="hud__chip hud__btn" id="btnProjector" type="button" title="Modo proyección (letra grande)" aria-label="Modo proyección">📽️</button>
+    </div>
+  </div>
+  <nav class="tabs" aria-label="Módulos"><div class="tabs__in" id="tabs"></div></nav>
+</header>
+
+<main>
+
+<!-- =====================================================================
+     INICIO
+     ===================================================================== -->
+<section class="module" id="m-inicio" data-title="Inicio" data-icon="🏠" data-desc="Bienvenida, objetivos y registro">
+  <div class="wrap">
+    <!-- Banner Institucional con logos oficiales -->
+    <div class="inst-banner reveal">
+      <div class="inst-banner__side">
+        <img src="img/logo-mars-hse.png" alt="HSE Mars Snacking Latin America" class="inst-banner__logo">
+        <div>
+          <div class="inst-banner__brand">HSE · MARS SNACKING</div>
+          <div class="inst-banner__sub">Latin America · Seguridad y Salud en el Trabajo</div>
+        </div>
+      </div>
+      <div class="inst-banner__divider"></div>
+      <div class="inst-banner__side">
+        <img src="img/logo-loto-vida.png" alt="Un candado, una energía, una vida" class="inst-banner__logo">
+        <div>
+          <div class="inst-banner__brand">PROGRAMA DE BLOQUEO LOTO</div>
+          <div class="inst-banner__sub">Un Candado · Una Energía · Una Vida</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div>
+        <span class="hero__badge">🔒 Capacitación SST · Operarios de maquinaria</span>
+        <h1>Bloqueo y etiquetado <span>LOTO</span></h1>
+        <p class="lead">Antes de intervenir una máquina, sus energías peligrosas deben quedar <b>bloqueadas con tu candado</b> y <b>señalizadas con tu tarjeta</b>. Aquí aprendes cómo, paso a paso y jugando.</p>
+        <div class="author">
+          <span class="author__av">MS</span>
+          <span><small>Cartilla creada por</small><b>Mabel Segura Borda</b> · Auxiliar de EHS</span>
+        </div>
+        <div class="btn-row no-print">
+          <button class="btn btn--sun" type="button" data-go="1">▶ Empezar capacitación</button>
+          <a class="btn btn--white" href="#registro">📝 Registrarme</a>
+        </div>
+      </div>
+      <div class="hero__art">
+        <svg class="heroill" viewBox="0 0 360 300" aria-hidden="true">
+          <rect x="40" y="40" width="190" height="220" rx="22" fill="#fff" opacity=".96"/>
+          <rect x="62" y="66" width="146" height="18" rx="9" fill="#dfe3ff"/>
+          <rect x="62" y="98" width="60" height="70" rx="10" fill="#eef0ff" stroke="#0000a0" stroke-width="3"/>
+          <rect x="84" y="112" width="16" height="34" rx="5" fill="#e11d48"/>
+          <rect x="136" y="98" width="60" height="70" rx="10" fill="#eef0ff" stroke="#0000a0" stroke-width="3"/>
+          <rect x="158" y="126" width="16" height="34" rx="5" fill="#e11d48"/>
+          <text x="135" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="15" fill="#0000a0">TABLERO</text>
+          <text x="135" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="11" fill="#6b7399">ENERGÍA AISLADA</text>
+          <g class="shackle"><path d="M238 150 V122 a26 26 0 0 1 52 0 V150" fill="none" stroke="#dfe3ff" stroke-width="12" stroke-linecap="round"/></g>
+          <rect x="222" y="144" width="84" height="70" rx="16" fill="#e11d48"/>
+          <circle cx="264" cy="174" r="8" fill="#2a0010"/><rect x="260" y="178" width="8" height="18" rx="4" fill="#2a0010"/>
+          <g class="tagswing"><line x1="264" y1="214" x2="264" y2="232" stroke="#ffc629" stroke-width="3"/>
+            <rect x="226" y="232" width="76" height="52" rx="8" fill="#ffc629"/><text x="264" y="256" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="12" fill="#5c3d00">PELIGRO</text><text x="264" y="272" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="8.5" fill="#5c3d00">NO OPERAR</text></g>
+        </svg>
+        <span class="floatchip floatchip--1"><img src="img/logo-loto-vida.png" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:contain"> Un candado = una vida</span>
+        <span class="floatchip floatchip--2"><i>⚡</i> Energía cero</span>
+        <span class="floatchip floatchip--3"><i>🏷️</i> Tu tarjeta, tu nombre</span>
+      </div>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><span class="stat__ic" style="background:var(--mars-50)">📚</span><div><b>7</b><span>módulos</span></div></div>
+      <div class="stat"><span class="stat__ic" style="background:var(--sun-50)">🎮</span><div><b>6</b><span>juegos y simuladores</span></div></div>
+      <div class="stat"><span class="stat__ic" style="background:var(--green-50)">🏅</span><div><b id="statMedals">0/8</b><span>insignias ganadas</span></div></div>
+      <div class="stat"><span class="stat__ic" style="background:var(--sky-50)">⏱️</span><div><b>20</b><span>minutos</span></div></div>
+    </div>
+
+    <h2 class="section-title reveal" id="registro"><span class="bar"></span>Regístrate y crea tu tarjeta</h2>
+    <div class="grid g2 reveal">
+      <div class="card">
+        <div class="field">
+          <label>Elige tu avatar</label>
+          <div class="avatars" id="avatars">
+            <button class="avatar sel" type="button" data-av="👷">👷</button>
+            <button class="avatar" type="button" data-av="👷‍♀️">👷‍♀️</button>
+            <button class="avatar" type="button" data-av="🧑‍🔧">🧑‍🔧</button>
+            <button class="avatar" type="button" data-av="👩‍🔧">👩‍🔧</button>
+            <button class="avatar" type="button" data-av="🦺">🦺</button>
+          </div>
+        </div>
+        <div class="field"><label for="inName">Nombre completo *</label><input class="input" id="inName" autocomplete="name" placeholder="Ej. Carlos Andrés Ramírez"></div>
+        <div class="grid g2" style="gap:12px">
+          <div class="field"><label for="inEmp">Número de empleado *</label><input class="input" id="inEmp" placeholder="Ej. 45821"></div>
+        </div>
+        <div class="grid g2" style="gap:12px">
+          <div class="field"><label for="inArea">Área *</label>
+            <input class="input" id="inArea" placeholder="Ej. Producción">
+          </div>
+          <div class="field"><label for="inCargo">Cargo *</label>
+            <input class="input" id="inCargo" autocomplete="organization-title" placeholder="Ej. Operador de máquina">
+          </div>
+        </div>
+        <div class="field"><label for="inMachine">Máquina o línea donde trabajas</label><input class="input" id="inMachine" placeholder="Ej. Línea 2, empacadora">
+        </div>
+        <button class="btn btn--primary" type="button" id="btnRegister" style="width:100%">Guardar mi registro ✓</button>
+        <div class="fb" id="regFb"></div>
+      </div>
+      <div class="card card--soft" style="display:flex; flex-direction:column; justify-content:center; gap:16px; padding:28px 18px">
+        <p style="text-align:center; font-weight:800; color:var(--mars); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase">Vista previa de tu tarjeta LOTO</p>
+        <div class="tag">
+          <div class="tag__top">
+            <div class="tag__hole"></div>
+            <span class="tag__danger">⚠ PELIGRO</span>
+            <div style="font-weight:800; margin-top:8px; font-size:.85rem">NO OPERAR · EQUIPO BLOQUEADO</div>
+          </div>
+          <div class="tag__stripes"></div>
+          <div class="tag__body">
+            <div class="tag__who"><span class="av" id="tagAv">👷</span><div><small>CANDADO PERSONAL E INTRANSFERIBLE</small><b id="tagName">Tu nombre</b></div></div>
+            <div class="tag__row"><span>N° empleado</span><span id="tagEmp">—</span></div>
+            <div class="tag__row"><span>Área</span><span id="tagArea">—</span></div>
+            <div class="tag__row"><span>Cargo</span><span id="tagCargo">—</span></div>
+            <div class="tag__row"><span>Equipo</span><span id="tagMachine">—</span></div>
+            <div class="tag__row" style="border:0"><span>Fecha</span><span id="tagDate">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal"><span class="bar"></span>Objetivos de la capacitación</h2>
+    <ol class="objs reveal">
+      <li>Reconocer cuándo debes aplicar LOTO y quién es personal autorizado y personal afectado.</li>
+      <li>Identificar los 8 tipos de energía peligrosa y dónde están en la planta.</li>
+      <li>Usar bien tu candado y tu tarjeta, y entender el código de colores.</li>
+      <li>Elegir el accesorio de bloqueo correcto para cada punto.</li>
+      <li>Seguir los pasos para bloquear y desbloquear según el procedimiento específico del equipo.</li>
+      <li>Saber cuándo un ajuste menor o una limpieza es excepción a LOTO y qué reglas cumplir.</li>
+    </ol>
+
+    <h2 class="section-title reveal"><span class="bar"></span>Tu ruta de aprendizaje</h2>
+    <div class="route reveal" id="route"></div>
+
+    <h2 class="section-title reveal"><span class="bar"></span>Insignias que puedes ganar</h2>
+    <div class="medals reveal" id="medalList"></div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     1. ¿QUIÉN Y CUÁNDO?
+     ===================================================================== -->
+<section class="module" id="m-cuando" data-title="¿Quién y cuándo?" data-icon="🙋" data-desc="Cuándo aplica LOTO, roles y el principio básico">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo 1</span>
+        <h2>¿Quién aplica LOTO y cuándo?</h2>
+        <p>LOTO es el <b>bloqueo</b> (con candado) y el <b>etiquetado</b> (con tarjeta) de las energías peligrosas de una máquina antes de intervenirla.</p>
+      </div>
+      <div class="mod-head__icon">🙋</div>
+    </div>
+
+    <h3 class="section-title reveal"><span class="bar"></span>Debes aplicar LOTO si haces…</h3>
+    <div class="grid g3 reveal">
+      <div class="card lift"><div class="ico">🔧</div><h3>Mantenimiento</h3><p>Actividades de <b>mantenimiento preventivo o correctivo</b> en una máquina o equipo.</p></div>
+      <div class="card lift"><div class="ico ico--sky">✋</div><h3>Intervenciones</h3><p><b>Intervenciones a máquinas o equipos</b> en las que estás expuesto a la <b>liberación accidental de energía peligrosa</b>.</p></div>
+      <div class="card lift"><div class="ico ico--green">🧽</div><h3>Limpieza</h3><p>Una <b>limpieza a maquinaria o equipo</b>.</p></div>
+    </div>
+    <div class="alert alert--red reveal">
+      <span class="alert__ic">⚠</span>
+      <div><b>ATENCIÓN.</b> El <b>no hacerlo</b> implica la <b>violación de un absoluto de Seguridad</b> y amerita una <b>sanción</b>.</div>
+    </div>
+
+    <h3 class="section-title reveal"><span class="bar"></span>Dos grupos de personas</h3>
+    <div class="vs reveal">
+      <div class="card card--mars">
+        <div class="ico" style="background:rgba(255,255,255,.15)">🦺</div>
+        <h3>Personal autorizado</h3>
+        <ul>
+          <li><b>Ha recibido capacitación específica</b> en el programa LOTO y <b>sabe aplicarlo</b> en la máquina o equipo en cuestión.</li>
+          <li><b>Conoce el procedimiento específico de bloqueo del equipo</b> y cuenta con equipo de protección personal para aplicar LOTO.</li>
+        </ul>
+      </div>
+      <div class="vs__mid"><span>vs</span></div>
+      <div class="card">
+        <div class="ico ico--sky">👀</div>
+        <h3>Personal afectado</h3>
+        <ul>
+          <li>Si <b>operas una máquina o equipo</b> a la que se le está dando <b>servicio o mantenimiento</b>.</li>
+          <li>Si tu <b>lugar de trabajo</b> está en un área donde <b>se le está dando servicio o mantenimiento a una máquina</b>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alert alert--blue reveal">
+      <span class="alert__ic">ℹ</span>
+      <div><b>Nota:</b> en algunos casos, <b>el colaborador autorizado también puede ser afectado</b>, si le asignan tareas de mantenimiento en el equipo que opera.</div>
+    </div>
+
+    <h3 class="section-title reveal"><span class="bar"></span>El principio básico</h3>
+    <div class="principle reveal">
+      <div style="display:flex; justify-content:center; align-items:center; position:relative; z-index:1">
+        <img src="img/logo-loto-vida.png" alt="Un candado, una energía, una vida" style="width:128px; height:128px; border-radius:50%; background:#fff; padding:3px; box-shadow:0 10px 30px rgba(0,0,0,.35); object-fit:contain">
+      </div>
+      <div style="position:relative; z-index:1">
+        <h3>Un candado = <span>una vida</span></h3>
+        <p>Debes saber el principio básico de LOTO:</p>
+        <div class="rules3">
+          <div><b>1 · Tu propio candado</b>Cada colaborador involucrado en el trabajo sobre una máquina con energía peligrosa debe colocar <b style="display:inline;color:#fff">su propio candado y tarjeta</b> en cada punto de bloqueo.</div>
+          <div><b>2 · ¡El candado es personal!</b>Una vez bloqueado debes conservar la llave y no compartirla con nadie.</div>
+          <div><b>3 · Una vida protegida</b>Un candado es igual a una vida protegida.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card--red reveal" style="margin-top:16px">
+      <div class="ico ico--red" style="background:#fff">⛔</div>
+      <h3>Nunca</h3>
+      <ul>
+        <li><b>Nunca retires un candado de otra persona</b> sin la autorización previa del dueño.</li>
+        <li>Si aplicas LOTO, <b>nunca te retires de la planta o zona de trabajo dejando instalados tus candados y etiquetas</b>. Al final de tu jornada deben permanecer contigo o en el lugar que tienes asignado para resguardarlos.</li>
+      </ul>
+      <p style="margin-top:8px">Existe un <b>procedimiento en caso de excepción</b> para cuando una persona está ausente y se requiere retirar su candado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     2. ENERGÍAS
+     ===================================================================== -->
+<section class="module" id="m-energias" data-title="Energías" data-icon="⚡" data-desc="Las 8 energías peligrosas y dónde están">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo 2</span>
+        <h2>Las 8 energías peligrosas</h2>
+        <p>¿Qué energías debo identificar y bloquear antes de intervenir una máquina, equipo o sistema? <b>Toca cada tarjeta para girarla</b> y ver dónde la encontramos en la planta.</p>
+      </div>
+      <div class="mod-head__icon">⚡</div>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap">
+      <span class="counter" id="flipCount">Descubiertas 0/8</span>
+      <div class="progressbar" style="flex:1; min-width:160px"><i id="flipBar"></i></div>
+    </div>
+    <div class="flipgrid" id="flipgrid"></div>
+
+    <div class="scan reveal" id="scan">
+      <div class="scan__head">
+        <h3>🔍 Escáner de planta</h3>
+        <span class="counter" id="scanCount">0/6 identificadas</span>
+        <p>Toca cada punto que late sobre la línea y elige qué energía peligrosa hay ahí.</p>
+      </div>
+      <div class="scan__stage" id="scanStage"></div>
+      <div class="scan__foot" id="scanFoot">👆 Toca un punto rojo para empezar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     3. CANDADO Y TARJETA
+     ===================================================================== -->
+<section class="module" id="m-dispositivos" data-title="Candado y tarjeta" data-icon="🔒" data-desc="Tu EPP de LOTO y el código de colores">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo 3</span>
+        <h2>Candado, tarjeta y código de colores</h2>
+        <p>Los dispositivos de bloqueo (candado) y de etiquetado (tarjeta) son tu <b>Equipo de Protección Personal de LOTO</b>.</p>
+      </div>
+      <div class="mod-head__icon">🔒</div>
+    </div>
+
+    <h3 class="section-title reveal"><span class="bar"></span>Equipo adicional de bloqueo</h3>
+    <div class="card reveal" style="padding:24px; border-left:4px solid var(--sun); margin-bottom:24px">
+      <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap">
+        <div class="ico ico--sun" style="width:52px; height:52px; font-size:1.8rem; flex-shrink:0">🧰</div>
+        <div style="flex:1; min-width:260px">
+          <h3 style="font-size:1.25rem; margin-bottom:8px">Accesorios auxiliares de bloqueo</h3>
+          <p style="color:var(--text-2); line-height:1.55; margin-bottom:14px">
+            El <b>equipo adicional de bloqueo</b> comprende todos los <b>elementos y accesorios auxiliares</b> indispensables cuando el punto aislador de la máquina <b>no cuenta con un diseño para alojar directamente tu candado</b>, o cuando se realiza un <b>bloqueo grupal</b> donde varios colaboradores intervienen la misma máquina.
+          </p>
+          <div class="grid g2" style="gap:14px">
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:14px">
+              <b style="color:var(--mars); display:block; margin-bottom:8px">📌 ¿Cuándo es necesario utilizarlo?</b>
+              <ul style="margin:0; padding-left:1.2em; font-size:.88rem; color:var(--text-2); line-height:1.5">
+                <li><b>Puntos sin portacandado propio:</b> interruptores tipo breaker, válvulas de bola, compuerta o mariposa.</li>
+                <li><b>Bloqueo grupal:</b> cuando dos o más operarios deben bloquear un mismo punto (usando cangrejos o cajas grupales).</li>
+                <li><b>Conexiones especiales:</b> clavijas eléctricas o mangueras neumáticas.</li>
+              </ul>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:14px">
+              <b style="color:var(--mars); display:block; margin-bottom:8px">⚠️ Regla mandatoria de uso:</b>
+              <p style="margin:0; font-size:.88rem; color:var(--text-2); line-height:1.5">
+                El accesorio <b>nunca reemplaza a tu candado ni a tu tarjeta</b>. Su función es servir como puente mecánico seguro sobre el cual <b>debes instalar obligatoriamente tu candado personal intransferible</b>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-title reveal"><span class="bar"></span>Código de colores</h3>
+    <div class="locks reveal">
+      <div class="card lift lockcard"><svg viewBox="0 0 76 96" aria-hidden="true"><path class="shk" d="M20 44 V28 a18 18 0 0 1 36 0 V44" fill="none" stroke="#b9c0dd" stroke-width="8"/><rect x="8" y="40" width="60" height="50" rx="12" fill="#e11d48"/><circle cx="38" cy="62" r="6" fill="#2a0010"/><rect x="35" y="64" width="6" height="12" rx="3" fill="#2a0010"/></svg><h3 style="color:var(--red)">Rojo</h3><p>Propiedad de alguien (<b>individual</b>).</p></div>
+      <div class="card lift lockcard"><svg viewBox="0 0 76 96" aria-hidden="true"><path class="shk" d="M20 44 V28 a18 18 0 0 1 36 0 V44" fill="none" stroke="#b9c0dd" stroke-width="8"/><rect x="8" y="40" width="60" height="50" rx="12" fill="#0000a0"/><circle cx="38" cy="62" r="6" fill="#000040"/><rect x="35" y="64" width="6" height="12" rx="3" fill="#000040"/></svg><h3 style="color:var(--mars)">Azul</h3><p>Es de uso individual, pero <b>no pertenece a la persona</b> (préstamo).</p></div>
+      <div class="card lift lockcard"><svg viewBox="0 0 76 96" aria-hidden="true"><path class="shk" d="M20 44 V28 a18 18 0 0 1 36 0 V44" fill="none" stroke="#b9c0dd" stroke-width="8"/><rect x="8" y="40" width="60" height="50" rx="12" fill="#ffc629"/><circle cx="38" cy="62" r="6" fill="#5c3d00"/><rect x="35" y="64" width="6" height="12" rx="3" fill="#5c3d00"/></svg><h3 style="color:#b07a00">Amarillo o dorado</h3><p>Para bloquear equipo en <b>mantenimiento prolongado o fuera de servicio</b>.</p></div>
+    </div>
+
+    <div class="game reveal" id="gLocks">
+      <div class="game__head"><h3>🎯 ¿Qué candado uso?</h3><span class="counter" id="gLocksCount"></span></div>
+      <div class="game__body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     4. ACCESORIOS
+     ===================================================================== -->
+<section class="module" id="m-accesorios" data-title="Accesorios" data-icon="🧰" data-desc="Para qué sirve cada accesorio de bloqueo">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo 4</span>
+        <h2>Accesorios de bloqueo</h2>
+        <p>Además del <b>dispositivo aislador</b> y tu <b>EPP LOTO</b>, a veces necesitarás un <b>accesorio de bloqueo</b>. Elige uno de la lista para ver para qué sirve y cómo se instala.</p>
+      </div>
+      <div class="mod-head__icon">🧰</div>
+    </div>
+
+    <div class="acc reveal">
+      <div class="acc__list" id="accList"></div>
+      <div class="acc__panel" id="accPanel"></div>
+    </div>
+
+    <div class="game reveal" id="gMatch">
+      <div class="game__head"><h3>🧩 Une cada accesorio con su uso</h3><span class="counter" id="gMatchCount">0/6 parejas</span><p>Toca un accesorio a la izquierda y luego su uso a la derecha.</p></div>
+      <div class="game__body">
+        <div class="match"><div><h5>Accesorio</h5><div class="opts" id="mLeft"></div></div><div><h5>Sirve para</h5><div class="opts" id="mRight"></div></div></div>
+        <div class="fb" id="mFb"></div>
+        <div class="btn-row"><button class="btn btn--ghost" type="button" id="mReset">↺ Reiniciar</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     5. PASO A PASO
+     ===================================================================== -->
+<section class="module" id="m-pasos" data-title="Paso a paso" data-icon="🪜" data-desc="Pasos para bloquear y desbloquear + simulador">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo 5</span>
+        <h2>Paso a paso: bloquear</h2>
+        <p>Estos son los pasos para dejar un equipo en <b>energía cero</b>. En tu máquina sigue siempre <b>su propio procedimiento específico</b>, porque los puntos de bloqueo cambian de equipo a equipo.</p>
+      </div>
+      <div class="mod-head__icon">🪜</div>
+    </div>
+
+    <div class="stepper reveal" id="stepper">
+      <div class="timeline" id="timeline"></div>
+      <div class="stepview" id="stepview"></div>
+    </div>
+    <div class="print-only" id="stepsPrint"></div>
+
+    <div class="game reveal" id="gSim">
+      <div class="game__head"><h3>🕹️ Simulador: deja la banda en energía cero</h3><span class="counter" id="simCount">Paso 0/7</span><p>Toca los pasos en el orden correcto y mira cómo cambia la máquina. Si te saltas un paso, el simulador te avisa.</p></div>
+      <div class="sim">
+        <div class="sim__steps" id="simSteps"></div>
+        <div class="sim__monitor">
+          <div class="mon__state"><h4>Monitor de la banda</h4><span class="badge badge--red" id="simBadge">● EQUIPO ENERGIZADO</span></div>
+          <div class="gauges">
+            <div class="gauge hot" id="gMotion"><small>Banda</small><b>En marcha</b></div>
+            <div class="gauge hot" id="gElec"><small>Energía eléctrica</small><b>Presente</b></div>
+            <div class="gauge hot" id="gAir"><small>Energía mecánica</small><b>Presente</b></div>
+            <div class="gauge" id="gLocksG"><small>Candados y tarjetas</small><b>0 de 2 puntos</b></div>
+          </div>
+          <div class="machine" id="machine">
+            <svg viewBox="0 0 420 170" aria-hidden="true">
+              <rect x="10" y="110" width="400" height="14" rx="7" fill="#dfe3ff"/>
+              <line class="belt" x1="20" y1="117" x2="400" y2="117" stroke="#0000a0" stroke-width="4"/>
+              <rect x="120" y="40" width="160" height="70" rx="12" fill="#eef0ff" stroke="#0000a0" stroke-width="3"/>
+              <text x="200" y="72" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="16" fill="#0000a0">BANDA</text><text x="200" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#0000a0">transportadora</text>
+              <g class="gear"><circle cx="150" cy="117" r="13" fill="#fff" stroke="#0000a0" stroke-width="3"/><circle cx="150" cy="117" r="4" fill="#0000a0"/></g>
+              <g class="gear"><circle cx="250" cy="117" r="13" fill="#fff" stroke="#0000a0" stroke-width="3"/><circle cx="250" cy="117" r="4" fill="#0000a0"/></g>
+              <rect x="16" y="22" width="70" height="82" rx="8" fill="#fff" stroke="#3b4470" stroke-width="2.5"/>
+              <text x="51" y="37" text-anchor="middle" font-size="9" font-weight="800" font-family="Inter, sans-serif" fill="#3b4470">ENERGÍA</text>
+              <text x="51" y="48" text-anchor="middle" font-size="9" font-weight="800" font-family="Inter, sans-serif" fill="#3b4470">ELÉCTRICA</text>
+              <rect id="simSwitch" x="44" y="58" width="14" height="26" rx="4" fill="#0ea371"/>
+              <g class="lk" id="lk1"><rect x="62" y="78" width="16" height="14" rx="3" fill="#e11d48"/><path d="M65 78 v-5 a5 5 0 0 1 10 0 v5" fill="none" stroke="#e11d48" stroke-width="2.5"/><rect x="70" y="92" width="10" height="13" rx="2" fill="#ffc629"/></g>
+              <rect x="312" y="16" width="96" height="36" rx="10" fill="#fff" stroke="#3b4470" stroke-width="2.5"/>
+              <text x="360" y="31" text-anchor="middle" font-size="9" font-weight="800" font-family="Inter, sans-serif" fill="#3b4470">ENERGÍA</text>
+              <text x="360" y="44" text-anchor="middle" font-size="9" font-weight="800" font-family="Inter, sans-serif" fill="#3b4470">MECÁNICA</text>
+              <line x1="312" y1="40" x2="282" y2="62" stroke="#00a1ff" stroke-width="5" id="simAirLine" stroke-dasharray="8 6"/>
+              <g class="gear"><path d="M343.6 63.1 l2.8 0 l0.8 3.4 a10.5 10.5 0 0 1 2.9 1.2 l3 -1.8 l2 2 l-1.8 3 a10.5 10.5 0 0 1 1.2 2.9 l3.4 0.8 l0 2.8 l-3.4 0.8 a10.5 10.5 0 0 1 -1.2 2.9 l1.8 3 l-2 2 l-3 -1.8 a10.5 10.5 0 0 1 -2.9 1.2 l-0.8 3.4 l-2.8 0 l-0.8 -3.4 a10.5 10.5 0 0 1 -2.9 -1.2 l-3 1.8 l-2 -2 l1.8 -3 a10.5 10.5 0 0 1 -1.2 -2.9 l-3.4 -0.8 l0 -2.8 l3.4 -0.8 a10.5 10.5 0 0 1 1.2 -2.9 l-1.8 -3 l2 -2 l3 1.8 a10.5 10.5 0 0 1 2.9 -1.2 z" fill="#ffc629" stroke="#0000a0" stroke-width="2" stroke-linejoin="round"/><circle cx="345" cy="77" r="4.5" fill="#fff" stroke="#0000a0" stroke-width="2"/></g>
+              <g class="lk" id="lk2"><rect x="374" y="60" width="16" height="14" rx="3" fill="#e11d48"/><path d="M377 60 v-5 a5 5 0 0 1 10 0 v5" fill="none" stroke="#e11d48" stroke-width="2.5"/><rect x="382" y="74" width="10" height="13" rx="2" fill="#ffc629"/></g>
+              <circle id="simStop" cx="200" cy="148" r="10" fill="#b9c0dd"/><text x="200" y="152" text-anchor="middle" font-size="9" font-weight="900" fill="#fff" font-family="Inter, sans-serif">■</text>
+            </svg>
+          </div>
+          <div class="fb" id="simFb"></div>
+          <div class="btn-row"><button class="btn btn--ghost" type="button" id="simReset">↺ Reiniciar simulador</button></div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal" style="margin-top:40px"><span class="bar"></span>Paso a paso: desbloquear</h2>
+    <p class="reveal" style="color:var(--text-2); margin-bottom:14px">Recuerda, para <b>retirar el bloqueo de forma segura</b> sigue los siguientes pasos:</p>
+    <ol class="unlock reveal">
+      <li><b>Retira</b><span>Herramientas y materiales de la máquina.</span></li>
+      <li><b>Verifica</b><span>Componentes de máquina bien instalados.</span></li>
+      <li><b>Reinstala</b><span>Guardas y dispositivos de seguridad.</span></li>
+      <li><b>Revisa</b><span>Personal autorizado en posición segura.</span></li>
+      <li><b>Desbloquea</b><span>Quita tu propio candado y tarjeta.</span></li>
+      <li><b>Notifica</b><span>Al personal afectado.</span></li>
+      <li><b>Energiza</b><span>Arranca el equipo.</span></li>
+      <li><b>Prueba</b><span>Funcionamiento correcto del equipo.</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- =====================================================================
+     6. EXCEPCIONES
+     ===================================================================== -->
+<section class="module" id="m-excepciones" data-title="Excepciones" data-icon="🔥" data-desc="Ajustes menores, línea de fuego y limpieza">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo 6</span>
+        <h2>Excepciones: cuándo puedes no aplicar LOTO</h2>
+        <p>Hay excepciones en las que puedes <b>NO aplicar LOTO</b>, pero <b>debes cumplir con reglas especiales de seguridad</b>: <b>ajustes menores</b> y <b>ciertos procesos de limpieza</b>.</p>
+      </div>
+      <div class="mod-head__icon">🔥</div>
+    </div>
+
+    <div class="card card--mars reveal">
+      <h3>Ajuste menor · Definición</h3>
+      <p>Se realizan <b>cuando la máquina o el equipo está en operación normal</b> y se encuentra produciendo.</p>
+    </div>
+
+    <div class="game reveal" id="gRules">
+      <div class="game__head"><h3>✅ Las 5 reglas básicas del ajuste menor</h3><p>Usa esta herramienta antes de un ajuste: activa cada regla que se cumple. Solo si se cumplen las 5 es ajuste menor.</p></div>
+      <div class="tool">
+        <div class="tool__rules" id="rules"></div>
+        <div class="tool__result" id="ruleResult"></div>
+      </div>
+    </div>
+
+    <div class="fireline reveal">
+      <div class="flame">🔥</div>
+      <div><h3>¿Qué es cruzar la línea de fuego?</h3><p>Es el acto de <b>interponer nuestro cuerpo</b>, o parte de él, <b>entre, frente o bajo una fuente de energía</b> considerablemente mayor a la que nuestro organismo puede soportar y que <b>puede provocarnos una lesión</b> traumática o la muerte.</p></div>
+    </div>
+
+    <h3 class="section-title reveal"><span class="bar"></span>Procedimientos de limpieza que son excepción de LOTO</h3>
+    <div class="grid g2 reveal" style="align-items:stretch">
+      <div class="card" style="display:flex; flex-direction:column; justify-content:center">
+        <div class="ico ico--sky">🧽</div>
+        <h3 style="margin-bottom:8px">Limpieza con equipo en movimiento</h3>
+        <p style="color:var(--text-2); margin-bottom:12px">Solo se permite <b>sin aplicar LOTO</b> si se cumplen obligatoriamente estos 4 requisitos:</p>
+        <ul style="display:flex; flex-direction:column; gap:8px">
+          <li><b>Baja velocidad:</b> la máquina debe operar a velocidad mínima controlada.</li>
+          <li><b>Atrás de la línea de fuego:</b> jamás colocar manos ni cuerpo sobre bandas o piezas en movimiento.</li>
+          <li><b>Uso exclusivo de manguera:</b> la limpieza se realiza únicamente con manguera a presión y a distancia, sin usar herramientas manuales ni cepillos.</li>
+          <li><b>Análisis de riesgo previo:</b> aprobado por Sanidad, Seguridad y Operación, y entrenado al personal.</li>
+        </ul>
+      </div>
+      <div class="card card--soft" style="display:flex; flex-direction:column; gap:10px; padding:18px; justify-content:center">
+        <div class="photo">
+          <img src="img/limpieza-segura.jpg" alt="Operario realizando limpieza segura de banda transportadora exclusivamente con manguera a presión fuera de la línea de fuego" loading="lazy" style="display:block">
+          <span class="photo__zoom">🔍 Ampliar</span>
+        </div>
+        <p style="font-size:.82rem; color:var(--text-2); text-align:center; margin:0">
+          <b>Posición segura:</b> limpieza exclusiva con manguera a distancia prudencial, manteniéndose siempre detrás de la demarcación de seguridad y fuera de la línea de fuego.
+        </p>
+      </div>
+    </div>
+
+    <div class="game reveal" id="gFire">
+      <div class="game__head"><h3>🧠 ¿Excepción o LOTO?</h3><span class="counter" id="gFireCount"></span></div>
+      <div class="game__body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     7. EVALUACIÓN
+     ===================================================================== -->
+<section class="module" id="m-quiz" data-title="Evaluación" data-icon="🏆" data-desc="10 preguntas, certificado y registro">
+  <div class="wrap">
+    <div class="mod-head">
+      <div>
+        <span class="mod-head__tag">Módulo final</span>
+        <h2>Autoevaluación</h2>
+        <p>10 preguntas, una a la vez, sobre lo que viste en la cartilla. Verás la explicación de cada respuesta. Al terminar, tu resultado se envía al Google Sheet de EHS.</p>
+      </div>
+      <div class="mod-head__icon">🏆</div>
+    </div>
+    <div class="quiz" id="quiz">
+      <div id="quizCard"></div>
+      <div class="sync" id="sync"><b id="syncT">Estado del registro</b><span id="syncM"></span>
+        <div class="btn-row"><button class="btn btn--ghost" type="button" id="btnResend">🔄 Reenviar al Sheet</button><button class="btn btn--ghost" type="button" id="btnCsv">⬇️ Respaldo CSV</button></div>
+      </div>
+      <div class="cert" id="cert">
+        <div class="cert__bar">
+          <div><b>🎓 ¡Tu certificado está listo!</b><span>Descárgalo en PDF para guardarlo o enviarlo.</span></div>
+          <div class="btn-row">
+            <button class="btn btn--primary" type="button" id="btnCertPdf">⬇️ Descargar PDF</button>
+            <button class="btn btn--ghost" type="button" id="btnPrintCert">🖨️ Imprimir</button>
+          </div>
+        </div>
+        <div class="certview" id="certView">
+          <div class="certdoc" id="certDoc">
+            <svg class="cd__stripe" viewBox="0 0 1123 794" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="cdHaz" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="44" height="44" fill="#0000a0"/><rect width="22" height="44" fill="#ffc629"/></pattern></defs><rect width="1123" height="794" fill="url(#cdHaz)"/></svg>
+            <div class="cd__frame"><div class="cd__border"></div>
+              <header class="cd__top">
+                <img class="cd__logo" src="img/logo-mars-hse.png" alt="HSE Mars Snacking">
+                <div class="cd__org"><b>HSE · MARS SNACKING</b><span>Seguridad y Salud en el Trabajo</span></div>
+                <div class="cd__slogan"><span>Un candado</span><span>Una energía</span><span>Una vida</span></div>
+                <img class="cd__logo" src="img/logo-loto-vida.png" alt="Un candado, una energía, una vida">
+              </header>
+              <div class="cd__body">
+                <div class="cd__kicker">Certificado de capacitación</div>
+                <h3 class="cd__title">Bloqueo y Etiquetado de Energías Peligrosas</h3>
+                <div class="cd__loto">LOCKOUT · TAGOUT · LOTO</div>
+                <p class="cd__lead">Se certifica que</p>
+                <div class="cd__name" id="certName">—</div><div class="cd__uline"></div>
+                <p class="cd__id" id="certId">—</p>
+                <p class="cd__text">completó la <b>cartilla digital LOTO</b> y aprobó la evaluación final con un puntaje de <b id="certScore">—</b>, demostrando que conoce cuándo aplicar LOTO, las energías peligrosas, el uso del candado y la tarjeta, los accesorios de bloqueo, el paso a paso para bloquear y desbloquear, y las excepciones.</p>
+                <div class="cd__chips"><span>🙋 Quién y cuándo</span><span>⚡ 8 energías</span><span>🔒 Candado y tarjeta</span><span>🧰 Accesorios</span><span>🪜 Paso a paso</span><span>🔥 Excepciones</span></div>
+              </div>
+              <footer class="cd__foot">
+                <div class="cd__sign"><div class="cd__line"></div><b>Harrison Murillo</b><span>Coordinador EHS</span></div>
+                <div class="cd__seal">
+                  <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <circle cx="60" cy="60" r="56" fill="#ffc629"/><circle cx="60" cy="60" r="48" fill="none" stroke="#0000a0" stroke-width="2" stroke-dasharray="3 4"/>
+                    <circle cx="60" cy="60" r="40" fill="#0000a0"/>
+                    <path d="M48 58 V50 a12 12 0 0 1 24 0 V58" fill="none" stroke="#ffc629" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="42" y="56" width="36" height="26" rx="6" fill="#ffc629"/><circle cx="60" cy="67" r="4" fill="#0000a0"/><rect x="58" y="68" width="4" height="8" rx="2" fill="#0000a0"/>
+                  </svg>
+                  <b>APROBADO</b>
+                </div>
+                <div class="cd__data">
+                  <div><span>Fecha de emisión</span><b id="certDate">—</b></div>
+                  <div><span>Folio</span><b id="certFolio">—</b></div>
+                  <div><span>Máquina / línea</span><b id="certMachine">—</b></div>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Pie de módulo (escritorio) -->
+<div class="wrap no-print" id="modfootWrap">
+  <div class="modfoot">
+    <button class="btn btn--ghost" type="button" id="footPrev">← Anterior</button>
+    <span class="modfoot__mid" id="footMid"></span>
+    <button class="btn btn--primary" type="button" id="footNext">Completar y seguir →</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div style="display:flex; justify-content:center; align-items:center; gap:18px; margin-bottom:14px">
+    <img src="img/logo-mars-hse.png" alt="HSE Mars Snacking" style="width:52px; height:52px; border-radius:50%; background:#fff; padding:2px; object-fit:contain; box-shadow:0 3px 10px rgba(0,0,0,.3)">
+    <img src="img/logo-loto-vida.png" alt="Un candado, una energía, una vida" style="width:52px; height:52px; border-radius:50%; background:#fff; padding:2px; object-fit:contain; box-shadow:0 3px 10px rgba(0,0,0,.3)">
+  </div>
+  Cartilla digital LOTO · Bloqueo y etiquetado de energías peligrosas<br>
+  Creada por <b>Mabel Segura Borda</b> · Auxiliar de EHS
+  <small>Contenido tomado del curso LOTO de la planta.</small>
+</footer>
+
+<!-- Barra inferior (celular) -->
+<nav class="bottombar" aria-label="Navegación">
+  <span class="bb__bar" id="bbBar"></span>
+  <button class="bb__btn" type="button" id="bbPrev" aria-label="Módulo anterior">‹</button>
+  <button class="bb__mid" type="button" id="bbMenu"><small id="bbNum">Módulo</small><b id="bbTitle">Inicio</b></button>
+  <button class="bb__btn bb__btn--next" type="button" id="bbNext" aria-label="Completar y siguiente módulo">›</button>
+</nav>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__bg" data-close></div>
+  <div class="drawer__panel">
+    <div class="drawer__grab"></div>
+    <div class="drawer__title">Módulos de la cartilla</div>
+    <div class="drawer__list" id="drawerList"></div>
+  </div>
+</div>
+
+<div class="pop" id="pop" role="dialog" aria-modal="true"><div class="pop__box" id="popBox"></div></div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <button class="lightbox__x" type="button" id="lbX">✕ Cerrar</button>
+  <div class="lightbox__in"><img id="lbImg" alt=""><p class="lightbox__cap" id="lbCap"></p></div>
+</div>
+
+<div class="medalpop" id="medalpop"><div class="medalpop__box"><div class="medalpop__ic" id="mpIc">🏅</div><small>¡Insignia desbloqueada!</small><h3 id="mpName"></h3><button class="btn btn--primary" type="button" id="mpOk">¡Genial!</button></div></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
